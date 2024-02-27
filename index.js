@@ -29,10 +29,17 @@ async function main() {
 
   const list = ["A1", "A2", "A3"]
 
+ const db = client.db(dbName)
+ const collection = db.collection('items')
+
   // Read All --> GET
-  app.get('/item', function (req, res) {
-    res.send(list)
+  app.get('/item', async function (req, res) {
+    const items = await collection.find().toArray()
+
+    res.send(items)
+  
   })
+
   app.get('/item/:id', function (req, res) {
     //Acesso id no parametro de rota
     const id = req.params.id
