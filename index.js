@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const dbUrl = 'mongodb+srv://admin:hhtAGKhZbbByByaR@cluster0.zhgulcw.mongodb.net/'
 const dbName = 'Ocean2024'
@@ -44,7 +44,12 @@ async function main() {
     //Acesso id no parametro de rota
     const id = req.params.id
     //Acesso item na lista baseado no id
-    const item = list[id]
+    const item = collection.findOne({
+      _id: new ObjectId(id)
+    })
+
+
+
     //enviando o item como resposta
     res.send(item)
   })
@@ -53,18 +58,18 @@ async function main() {
   app.use(express.json())
 
   //Creat POST
-  app.post('/item', function (req, res) {
+  app.post('/item', async function (req, res) {
     //Extraindo o corpo da req
     const body = req.body
 
     //pegando o nome que foi enviado
     const item = body.nome
 
-    //colocando nome dentro da lista item
-    list.push(item)
+    //colocando nome dentro da collection item
+    await collection.insertOne(item)
 
     //enviando uma resposta
-    res.send('item adicionado')
+    res.send(item)
   })
 
   app.listen(3000)
