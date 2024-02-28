@@ -75,7 +75,7 @@ async function main() {
     // Novo item da requisição
     const novoItem = req.body
     // Atualizar banco de dados
-    collection.updateOne(
+    await collection.updateOne(
       {_id: new ObjectId(id)},
       {$set: novoItem}
     )
