@@ -87,7 +87,7 @@ async function main() {
   })
 
   // Delete -> [DELETE] /item/:id
-  app.delete('/item/:id', async function(re, res){
+  app.delete('/item/:id', async function(req, res){
     
     const id = req.params.id
     await collection.deleteOne({_id: new ObjectId(id)})
