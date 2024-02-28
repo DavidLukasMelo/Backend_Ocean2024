@@ -60,10 +60,7 @@ async function main() {
   //Creat POST
   app.post('/item', async function (req, res) {
     //Extraindo o corpo da req
-    const body = req.body
-
-    //pegando o nome que foi enviado
-    const item = body.nome
+    const item = req.body
 
     //colocando nome dentro da collection item
     await collection.insertOne(item)
