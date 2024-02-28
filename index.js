@@ -74,13 +74,25 @@ async function main() {
 
     // Novo item da requisição
     const novoItem = req.body
+    
     // Atualizar banco de dados
     await collection.updateOne(
+      
       {_id: new ObjectId(id)},
       {$set: novoItem}
-    )
+    
+      )
 
     res.send('Atualização com sucesso :) ')
+  })
+
+  // Delete -> [DELETE] /item/:id
+  app.delete('/item/:id', async function(re, res){
+    
+    const id = req.params.id
+    await collection.deleteOne({_id: new ObjectId(id)})
+    res.send('Item deletado x_x')
+  
   })
 
   app.listen(3000)
