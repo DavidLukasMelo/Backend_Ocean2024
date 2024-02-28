@@ -68,6 +68,20 @@ async function main() {
     //enviando uma resposta
     res.send(item)
   })
+  
+  app.put('/item/:id', async function(req, res){
+    const id = req.params.id
+
+    // Novo item da requisição
+    const novoItem = req.body
+    // Atualizar banco de dados
+    collection.updateOne(
+      {_id: new ObjectId(id)},
+      {$set: novoItem}
+    )
+
+    res.send('Atualização com sucesso :) ')
+  })
 
   app.listen(3000)
 
